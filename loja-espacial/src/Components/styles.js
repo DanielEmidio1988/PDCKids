@@ -8,6 +8,15 @@ export const Card = styled.div`
     flex-direction: column;
     background-color: yellow;
 `
+export const boxCard = styled.div`
+    display: flex;
+    width: 100%;
+    align-center: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: white;
+    flex-wrap: wrap;
+    `
 
 export const Imagem = styled.img`
     width: 100%;
