@@ -1,4 +1,4 @@
-import {BoxCentral, Card, Imagem, Container} from "./styles"
+import {BoxCentral, Card, Imagem, boxCard} from "./styles"
 import {useState} from 'react'
 import Carrinho from "./Carrinho"
 import Filtro from "./Filtro"
@@ -37,26 +37,25 @@ function Home (){
     imagem: "https://m.media-amazon.com/images/I/618tlTVGNAL._AC_UL480_FMwebp_QL65_.jpg"
   }])
  
-  const [carrinho, setCarrinho] = useState([""])
-
-  const novoProduto = [{
-    id: 6,
-    nome: "Onibus Espacial Space Explorer",
-    preco: 119.17,
-    imagem: "https://m.media-amazon.com/images/I/618tlTVGNAL._AC_UL480_FMwebp_QL65_.jpg"
-  }]
-
+  const [carrinho, setCarrinho] = useState([])
+  const [pesquisa, setPesquisa] = useState("")
+  const [valorMinimo, setValorMinimo] = useState("")
+  const [valorMaximo, setValorMaximo] = useState(9999)
+  const [ordem, setOrdem] = useState("")
   
  
-
     // BACKUP PARA GUARDAR A QUANTIDADE DE ITENS 
     // console.log(produtos.length)
 
     const onChangeCarrinho = (event)=>{
       setCarrinho(event.target.value)
+      console.log(event.target.value)
     }
 
-
+    const onChangeOrdem =(event)=>{
+      setOrdem(event.target.value)
+      console.log(event.target.value)
+    }
 
     const compraProduto = (produto) =>{
       const adicionaCarrinho = produtos.filter((item)=> item !== produto)
@@ -68,17 +67,53 @@ function Home (){
    
     return(
         <>
-        <Filtro/>
+        <Filtro
+        pesquisa={pesquisa}
+        setPesquisa={setPesquisa}
+        minimo={valorMinimo}
+        setMinimo={setValorMinimo}
+        maximo={valorMaximo}
+        setMaximo={setValorMaximo}
+        />
         <BoxCentral>
         <div>
-          <input type="text" placeholder="teste1"/> 
-          <input type="text" placeholder="teste1"/>
-          {/* <button onClick={testeDoCarrinho}>Teste</button> */}
+          <span>Quantidade de Itens: {produtos.length}</span>
+          <select value={ordem} onChange={onChangeOrdem}>
+            <option value="">Ordenar</option>
+            <option value="Maior">Preço: do maior para o menor</option>
+            <option value="Menor">Preço: do menor para o maior</option>
+          </select>
+   
         </div>
-        <div>
-          {/* Comando para renderizar todos os produtos da loja */}
-          {produtos.map((produto, index)=>{
-            return (
+        <boxCard>
+
+          {produtos
+          //Busca de produto pelo nome
+          .filter((produto) => {return produto.nome.includes(pesquisa)})
+          //filtrar produtos a partir do menor valor
+          .filter((produto)=> {return produto.preco >= valorMinimo})
+          //filtrar produtos a partir do menor valor
+          .filter((produto)=> {return produto.preco <= valorMaximo})
+          //Ordenar do maior e do menor
+          .sort((a,b)=>{  
+            switch(ordem){
+              case "Maior":
+                if(a.preco < b.preco){
+                  return 1
+                }else{
+                  return -1
+                }
+              case "Menor":
+                if(a.preco < b.preco){
+                  return -1
+                }else{
+                  return 1
+                }
+              }
+          })
+          // Comando para renderizar todos os produtos da loja
+          .map((produto, index)=>{
+            return(
             <Card key={index}>
             <div>
                 <Imagem src={produto.imagem} alt="Produto-Loja"/>
@@ -93,11 +128,12 @@ function Home (){
 
           })}
 
-        </div>
+        </boxCard>
 
         </BoxCentral>
         <Carrinho
         cesta={carrinho}
+        setCesta={setCarrinho}
         />
         </>
     )

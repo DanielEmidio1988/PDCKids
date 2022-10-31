@@ -2,16 +2,40 @@ import {BoxLateral} from "./styles"
 import Home from "./Home"
 
 function Carrinho (props){
-    console.log("Acessando a cesta",props.cesta)
-    console.log("Acessando o nome", props.cesta.nome)
+
+    let totalCarrinho = 0
+
+    const somaCarrinho = ()=>{
+        for (let i = 0;i<props.cesta;i++){
+            totalCarrinho =+ props.cesta[i].preco  
+            console.log("Preço", props.cesta[i].preco)  
+        }
+        console.log("Total carrinho", totalCarrinho)
+        return totalCarrinho
+    }
+
+    const removeItem = (produto)=>{
+        const buscaItem = props.cesta.filter((item) => item !== produto)
+        props.setCesta(buscaItem)
+    }
 
     return(
         <BoxLateral>
         <h2>Carrinho:</h2>
         
-        <p>{props.cesta.nome}</p>
+            {props.cesta.map((produto,index)=>{
+            return(
+                <div key={index}>
+                <p><span>{produto.nome} </span><span> {produto.preco}</span> <button onClick={()=>removeItem(produto)}>Remover</button></p>
+                </div>
+            )
+            
+        })}
+        
+        {/* <p>{props.cesta.nome}</p> */}
         {/* Inserir aqui os dados dos produtos que serão carregados */}
-        <p>Valor total: R$</p> 
+        {/* <p>Valor total: R$ {totalCarrinho}</p>  */}
+        <p>Valor total: R$ {somaCarrinho()}</p> 
         </BoxLateral>
     )
 }
