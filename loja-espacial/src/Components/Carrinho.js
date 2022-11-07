@@ -6,18 +6,18 @@ function Carrinho (props){
     let totalCarrinho = 0
 
     const somaCarrinho = ()=>{
-        for (let i = 0;i<props.cesta;i++){
-            totalCarrinho =+ props.cesta[i].preco  
-            console.log("Preço", props.cesta[i].preco)  
+        for (let i = 0;i<props.cesta.length;i++){
+            totalCarrinho += props.cesta[i].precototal
         }
-        console.log("Total carrinho", totalCarrinho)
-        return totalCarrinho
+        return
     }
 
     const removeItem = (produto)=>{
         const buscaItem = props.cesta.filter((item) => item !== produto)
         props.setCesta(buscaItem)
     }
+
+    somaCarrinho()
 
     return(
         <BoxLateral>
@@ -26,16 +26,12 @@ function Carrinho (props){
             {props.cesta.map((produto,index)=>{
             return(
                 <div key={index}>
-                <p><span>{produto.nome} </span><span> {produto.preco}</span> <button onClick={()=>removeItem(produto)}>Remover</button></p>
+                <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> {produto.preco}</span><span> {produto.precototal}</span> <button onClick={()=>removeItem(produto)}>Remover</button></p>
                 </div>
             )
             
         })}
-        
-        {/* <p>{props.cesta.nome}</p> */}
-        {/* Inserir aqui os dados dos produtos que serão carregados */}
-        {/* <p>Valor total: R$ {totalCarrinho}</p>  */}
-        <p>Valor total: R$ {somaCarrinho()}</p> 
+        <p>Valor total: R$ {totalCarrinho}</p> 
         </BoxLateral>
     )
 }

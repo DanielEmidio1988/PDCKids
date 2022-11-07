@@ -9,12 +9,10 @@ function Filtro(props){
 
     const handleMinSearch = (event)=>{
         props.setMinimo(event.target.value)
-        console.log(event.target.value)
     }
 
     const handleMaxSearch = (event)=>{
         props.setMaximo(event.target.value)
-        console.log(event.target.value)
     }
 
     return (
