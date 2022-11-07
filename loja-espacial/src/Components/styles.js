@@ -8,7 +8,7 @@ export const Card = styled.div`
     flex-direction: column;
     background-color: yellow;
 `
-export const boxCard = styled.div`
+export const BoxCard = styled.div`
     display: flex;
     width: 100%;
     align-center: center;
