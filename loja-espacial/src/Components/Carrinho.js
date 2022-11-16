@@ -1,4 +1,4 @@
-import {BoxLateral} from "./styles"
+import {BoxLateralCarrinho} from "./styles"
 import Home from "./Home"
 
 function Carrinho (props){
@@ -20,20 +20,23 @@ function Carrinho (props){
     somaCarrinho()
 
     return(
-        <BoxLateral>
+        <BoxLateralCarrinho>
         <h2>Carrinho:</h2>
         
             {props.cesta.map((produto,index)=>{
             return(
-                <div key={index}>
-                <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> {produto.preco}</span><span> {produto.precototal}</span> <button onClick={()=>removeItem(produto)}>Remover</button></p>
+                <div key={index} onDoubleClick={()=>removeItem(produto)}>
+                <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> <b>{produto.precototal}</b></span></p>
                 </div>
             )
             
         })}
-        <p>Valor total: R$ {totalCarrinho}</p> 
-        </BoxLateral>
+        
+        <p><b>Valor total: R$ {totalCarrinho}</b></p>
+        <button>Acessar Carrinho</button>
+        </BoxLateralCarrinho>
     )
 }
+
 
 export default Carrinho

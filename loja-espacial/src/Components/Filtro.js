@@ -18,13 +18,13 @@ function Filtro(props){
     return (
         <>
         <BoxLateral>
-        <h2>Filtros</h2>
-        <p>Valor minimo:</p>
-        <input type="text" className="Input-Dados" value={props.minimo} onChange={handleMinSearch}/>
-        <p>Valor maximo:</p>
-        <input type="text" className="Input-Dados" value={props.maximo} onChange={handleMaxSearch}/>
+        <h2>Filtrar por:</h2>
+        <p>Menor Preço:</p>
+        <input type="text" className="Input-Dados" value={props.minimo} onChange={handleMinSearch} placeholder="R$ 0.00"/>
+        <p>Maior Preço:</p>
+        <input type="text" className="Input-Dados" value={props.maximo} onChange={handleMaxSearch} placeholder="R$ 0.00" />
         <p>Busca por nome:</p>
-        <input type="text" className="Input-Dados" value={props.pesquisa} onChange={handleNomeSearch} />
+        <input type="text" className="Input-Dados" value={props.pesquisa} onChange={handleNomeSearch} placeholder="Brinquedo"/>
         </BoxLateral>
         </>
     )

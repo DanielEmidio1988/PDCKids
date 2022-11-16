@@ -1,5 +1,5 @@
 import {BoxCentral, Card, Imagem, BoxCard} from "./styles"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Carrinho from "./Carrinho"
 import Filtro from "./Filtro"
 
@@ -34,7 +34,7 @@ function Home (){
     nome: "Kit de Construção LEGO Star Wars",
     preco: 318.36,
     imagem: "https://m.media-amazon.com/images/I/81mh4nC99TL._AC_UL480_FMwebp_QL65_.jpg",
- 
+
   },{
     id: 6,
     nome: "Onibus Espacial Space Explorer",
@@ -46,9 +46,7 @@ function Home (){
   const [pesquisa, setPesquisa] = useState("")
   const [valorMinimo, setValorMinimo] = useState("")
   const [valorMaximo, setValorMaximo] = useState("")
-  const [ordem, setOrdem] = useState("")
-  let quantidadeTela = []
-  
+  const [ordem, setOrdem] = useState("")  
 
     const onChangeCarrinho = (event)=>{
       setCarrinho(event.target.value)
@@ -75,15 +73,30 @@ function Home (){
         setCarrinho(novoCarrinho)
     }
 
-    const somaTela = ()=>{
+useEffect(() => {
+      if(carrinho.length>0){
+      const listaStringCarrinho = JSON.stringify(carrinho)
+      localStorage.setItem("carrinho",listaStringCarrinho)
+    }
+    },[carrinho])
+
+  useEffect(() => {
+
+    const novoCarrinho = JSON.parse(localStorage.getItem("carrinho"))
+      if(novoCarrinho !== null){
+        setCarrinho(novoCarrinho)
+      }   
+},[])
+
+    const somaTela = (produtos)=>{
           produtos
           .filter((produto) => {return produto.nome.includes(pesquisa)})
           .filter((produto)=> {return produto.preco >= valorMinimo})
           .filter((produto)=> {return valorMaximo ? produto.preco <= valorMaximo : produto})
           .map((produto, index)=>{
-            quantidadeTela = produto
-            console.log("Quantidade Tela", quantidadeTela)
-            return quantidadeTela.length
+            // quantidadeTela = produto.length
+            // console.log("Quantidade Tela", quantidadeTela)
+            return produto.length
       })}
    
     return(
@@ -97,16 +110,23 @@ function Home (){
         setMaximo={setValorMaximo}
         />
         <BoxCentral>
-        <div>
-          <span>Quantidade de Itens: {somaTela()}
-          </span>
-          <select value={ordem} onChange={onChangeOrdem}>
-            <option value="">Ordenar</option>
-            <option value="Maior">Preço: do maior para o menor</option>
-            <option value="Menor">Preço: do menor para o maior</option>
-          </select>
-   
-        </div>
+          <div className="boxcentral-topo">
+            <div>
+            <h3>
+              Resultado da busca:
+            </h3>
+            <p>
+              {produtos.length} produtos 
+            </p>
+            </div>
+            <div>
+            <select value={ordem} onChange={onChangeOrdem} className="boxcentral-topo-select">
+              <option value="">Ordenar por</option>
+              <option value="Maior">Preço: do maior para o menor</option>
+              <option value="Menor">Preço: do menor para o maior</option>
+            </select>
+            </div>
+          </div>
         <BoxCard>
 
           {produtos
@@ -138,15 +158,16 @@ function Home (){
             return(
             <Card key={index}>
             <div>
-                <Imagem src={produto.imagem} alt="Produto-Loja"/>
+                <img src={produto.imagem} alt="Produto-Loja"/>
             </div>
             <div>
                 <span>{produto.nome}</span><br/>
-                <span>R$ {produto.preco}</span><br/>
+
+                <h3>R$ {produto.preco}</h3><br/>
                 <button onClick={()=>compraProduto(produto)} onChange={onChangeCarrinho}>Comprar</button>
                 
             </div>
-              </Card>)
+            </Card>)
 
           })}
 
