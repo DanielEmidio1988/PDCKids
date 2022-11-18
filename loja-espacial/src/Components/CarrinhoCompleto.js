@@ -1,4 +1,5 @@
 import {ContainerPedido, BoxPedido, ResumoPedido, BoxPedidoEspaco, BoxPedidoProdutos, BoxPedidoProdutosItens} from "./styledCarrinhoCompleto"
+import {useState} from "react"
 
 function CarrinhoCompleto(props){
 
@@ -6,6 +7,13 @@ function CarrinhoCompleto(props){
     let qtdTotalCarrinho = 0
     let totalCompra = 0
     let frete = 0
+    let desconto = 0
+    const [cupom, setCupom] = useState("")
+
+    function onChangeCupom(event){
+        setCupom(event.target.value)
+    }
+
 
     const somaCarrinho = ()=>{
         for (let i = 0;i<props.carrinho.length;i++){
@@ -16,6 +24,31 @@ function CarrinhoCompleto(props){
     }
 
     somaCarrinho()
+
+    const aumentaItem =(produto) =>{
+        const carrinhoApoio = [...props.carrinho]
+        for(let i=0;i<carrinhoApoio.length;i++){
+            if(carrinhoApoio[i].id === produto.id){
+            carrinhoApoio[i].quantidade = carrinhoApoio[i].quantidade + 1
+            carrinhoApoio[i].precototal = carrinhoApoio[i].precototal + carrinhoApoio[i].preco
+            }  
+        }
+        props.setCarrinho(carrinhoApoio)
+    }
+
+    const diminuiItem =(produto) =>{
+        const carrinhoApoio = [...props.carrinho]
+        console.log("Produto", produto)
+        console.log("carrinhoApoio",carrinhoApoio)
+        for(let i=0;i<carrinhoApoio.length;i++){
+            if(carrinhoApoio[i].id === produto.id){
+            carrinhoApoio[i].quantidade = carrinhoApoio[i].quantidade - 1
+            carrinhoApoio[i].precototal = carrinhoApoio[i].precototal - carrinhoApoio[i].preco
+            }       
+        }
+        const buscaItem = carrinhoApoio.filter((item) => item.quantidade > 0)
+        props.setCarrinho(buscaItem)   
+    }
 
     const calculaFrete = ()=>{        
         if(totalCarrinho > 200){
@@ -29,10 +62,15 @@ function CarrinhoCompleto(props){
 
     calculaFrete()
 
-    const removeItem = (produto)=>{
-        const buscaItem = props.carrinho.filter((item) => item !== produto)
-        props.setCesta(buscaItem)
+    function validaCupom(){
+        const cupomPremiado = "@LABELOVERS"
+        if(cupom === cupomPremiado && totalCompra > 400){
+            desconto = 200
+            totalCompra = totalCompra - desconto
+        }
+        return
     }
+    validaCupom()
 
     return (
         <>
@@ -46,9 +84,9 @@ function CarrinhoCompleto(props){
                     <div>
                         {props.carrinho.map((produto,index)=>{
                         return(
-                        <BoxPedidoProdutos key={index} onDoubleClick={()=>removeItem(produto)}>
+                        <BoxPedidoProdutos key={index}>
                         {/* <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> <b>{produto.precototal}</b></span><button onClick={()=>removeItem(produto)}>Remover</button></p> */}
-                        <BoxPedidoProdutosItens><span><img src={produto.imagem} alt="produto-carrinho"/></span><span>{produto.nome}</span><span></span><span>- 1 +</span><span><h4>R$ {produto.precototal}</h4></span></BoxPedidoProdutosItens>
+                        <BoxPedidoProdutosItens><span><img src={produto.imagem} alt="produto-carrinho"/></span><span>{produto.nome}</span><span></span><span><h4 onClick={()=>diminuiItem(produto)}>-</h4> {produto.quantidade} <h4 onClick={()=>aumentaItem(produto)}>+</h4></span><span><h4>R$ {produto.precototal}</h4></span></BoxPedidoProdutosItens>
                         </BoxPedidoProdutos>
                         )        
                         })}
@@ -56,7 +94,7 @@ function CarrinhoCompleto(props){
                     <div>
                         <div>
                             <p><h4>Cupom de Desconto:</h4></p>
-                            <input placeholder="Insira seu cupom ou vale desconto"></input>
+                            <input value={cupom} onChange={onChangeCupom} placeholder="Insira seu cupom ou vale desconto"></input>
                         </div>
                         <div>
                             <select>
@@ -78,7 +116,7 @@ function CarrinhoCompleto(props){
                     <div><h2>Resumo Pedido</h2></div>
                     <div><span>x{qtdTotalCarrinho} produto</span><span>R$ {totalCarrinho}</span></div>
                     <div><span>Taxa de Entrega</span><span>R$ {frete}</span></div>
-                    <div><span>Desconto</span><span>R$ 0.00</span></div>
+                    <div><span>Desconto</span><span>R$ {desconto}</span></div>
                     <div><span><h3>Total</h3></span><span><h3>R$ {totalCompra}</h3></span></div>
                     <div><button onClick={()=>props.mudarTela(3)}>Continuar</button></div>
                 </div>

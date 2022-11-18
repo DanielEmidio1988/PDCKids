@@ -74,6 +74,9 @@ export const BoxPedidoProdutos = styled.div`
         width: 80px;
         padding-left: 20px;
     }
+    :hover{
+        cursor: pointer;
+    }
 `
 
 export const BoxPedidoProdutosItens = styled.p`
@@ -83,7 +86,24 @@ export const BoxPedidoProdutosItens = styled.p`
 
     span{
         width: 25%;
-        font-size: 14px;        
+        font-size: 14px; 
+        
+        :nth-child(4){
+            display: flex;
+            gap: 8px;
+
+            h4{
+                border-radius: 50%;
+                background-color: #A94DF3;
+                color: white;
+                width: 16px;
+                text-align: center;
+            }
+
+            h4:hover{
+                cursor: pointer;
+            }
+        }
     }
 `
 
