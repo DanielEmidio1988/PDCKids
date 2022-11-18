@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import Carrinho from "./Carrinho"
 import Filtro from "./Filtro"
 
-function Home (){
+function Home (props){
 
   const produtos = [{
     id: 1,
@@ -42,14 +42,14 @@ function Home (){
     imagem: "https://m.media-amazon.com/images/I/618tlTVGNAL._AC_UL480_FMwebp_QL65_.jpg",
   }]
  
-  const [carrinho, setCarrinho] = useState([])
+  // const [carrinho, setCarrinho] = useState([])
   const [pesquisa, setPesquisa] = useState("")
   const [valorMinimo, setValorMinimo] = useState("")
   const [valorMaximo, setValorMaximo] = useState("")
   const [ordem, setOrdem] = useState("")  
 
     const onChangeCarrinho = (event)=>{
-      setCarrinho(event.target.value)
+      props.setCarrinho(event.target.value)
     }
 
     const onChangeOrdem =(event)=>{
@@ -58,7 +58,7 @@ function Home (){
 
     //FUNÇÃO PARA COMPRA DE PRODUTOS NO CARRINHO
     const compraProduto = (produto) =>{
-      const novoCarrinho = [...carrinho]
+      const novoCarrinho = [...props.carrinho]
       const produtoAdicionado = produto
 
       const produtoExistente = novoCarrinho.find((produto)=>{
@@ -70,21 +70,21 @@ function Home (){
           }else{
             novoCarrinho.push({...produtoAdicionado, quantidade: 1, precototal: produtoAdicionado.preco })
           } 
-        setCarrinho(novoCarrinho)
+        props.setCarrinho(novoCarrinho)
     }
 
 useEffect(() => {
-      if(carrinho.length>0){
-      const listaStringCarrinho = JSON.stringify(carrinho)
+      if(props.carrinho.length>0){
+      const listaStringCarrinho = JSON.stringify(props.carrinho)
       localStorage.setItem("carrinho",listaStringCarrinho)
     }
-    },[carrinho])
+    },[props.carrinho])
 
   useEffect(() => {
 
     const novoCarrinho = JSON.parse(localStorage.getItem("carrinho"))
       if(novoCarrinho !== null){
-        setCarrinho(novoCarrinho)
+        props.setCarrinho(novoCarrinho)
       }   
 },[])
 
@@ -175,8 +175,9 @@ useEffect(() => {
 
         </BoxCentral>
         <Carrinho
-        cesta={carrinho}
-        setCesta={setCarrinho}
+        cesta={props.carrinho}
+        setCesta={props.setCarrinho}
+        carrinhoCompleto={props.mudarTela}
         />
         </>
     )
