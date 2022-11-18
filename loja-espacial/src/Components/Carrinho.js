@@ -33,7 +33,7 @@ function Carrinho (props){
         })}
         
         <p><b>Valor total: R$ {totalCarrinho}</b></p>
-        <button>Acessar Carrinho</button>
+        <button onClick={()=>props.carrinhoCompleto(2)}>Acessar Carrinho</button>
         </BoxLateralCarrinho>
     )
 }

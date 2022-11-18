@@ -85,6 +85,7 @@ export const Container = styled.div`
     display: flex;
     background-color: white;
     margin-bottom: 30px;
+    justify-content: center;
 `
 export const BoxLateral = styled.div`
     width: 15%;

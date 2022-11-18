@@ -23,7 +23,6 @@ function App() {
     <GlobalStyled/>
     <Header/>
     <Container>
-
     <MainPage/>
     </Container>  
     <Footer/>  
