@@ -1,7 +1,10 @@
-import Home from "./Home"
-import CarrinhoCompleto from "./CarrinhoCompleto"
-import PedidoFinalizado from "./PedidoFinalizado";
+import Home from "./Main/Home"
+import Header from './Header/Header'
+import Footer from './Footer/Footer'
+import CarrinhoCompleto from "./Main/CarrinhoCompleto"
+import PedidoFinalizado from "./Main/PedidoFinalizado"
 import { useState } from "react";
+import {Container} from "./Main/styles"
 
 function MainPage(){
 
@@ -27,7 +30,12 @@ function MainPage(){
     
     return (
         <>
+        <Header
+        mudarTela={renderizaTela()}/>
+        <Container>
         {renderizaTela()}
+        </Container>
+        <Footer/> 
         </>
     )
 }

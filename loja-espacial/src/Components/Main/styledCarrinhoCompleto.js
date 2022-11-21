@@ -8,7 +8,6 @@ export const ContainerPedido = styled.div`
 `
 export const BoxPedido = styled.div`
     width: 70%;
-    // background-color: blue;
     padding-top: 30px;
 
     h2{
@@ -50,8 +49,6 @@ export const BoxPedido = styled.div`
         font-weight: light;
         transform: scale(1.05)
     }
-
-
 `
 //Titulo dos itens da cesta (produto, qtd, nome)
 export const BoxPedidoEspaco = styled.div`
@@ -121,7 +118,6 @@ export const ResumoPedido = styled.div`
 
         :first-child{
             margin-bottom: 30px;
-
         }
 
         div{

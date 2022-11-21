@@ -46,7 +46,8 @@ function Home (props){
   const [pesquisa, setPesquisa] = useState("")
   const [valorMinimo, setValorMinimo] = useState("")
   const [valorMaximo, setValorMaximo] = useState("")
-  const [ordem, setOrdem] = useState("")  
+  const [ordem, setOrdem] = useState("") 
+  
 
     const onChangeCarrinho = (event)=>{
       props.setCarrinho(event.target.value)
@@ -88,16 +89,15 @@ useEffect(() => {
       }   
 },[])
 
-    const somaTela = (produtos)=>{
+    const somaTela = ()=>{
           produtos
           .filter((produto) => {return produto.nome.includes(pesquisa)})
           .filter((produto)=> {return produto.preco >= valorMinimo})
           .filter((produto)=> {return valorMaximo ? produto.preco <= valorMaximo : produto})
-          .map((produto, index)=>{
-            // quantidadeTela = produto.length
-            // console.log("Quantidade Tela", quantidadeTela)
-            return produto.length
+          .map((produto, index)=>{  
+            return (<p>{produto.length}</p>)
       })}
+   
    
     return(
         <>
@@ -116,7 +116,7 @@ useEffect(() => {
               Resultado da busca:
             </h3>
             <p>
-              {produtos.length} produtos 
+              {somaTela()} produtos 
             </p>
             </div>
             <div>
@@ -163,7 +163,7 @@ useEffect(() => {
             <div>
                 <span>{produto.nome}</span><br/>
 
-                <h3>R$ {produto.preco}</h3><br/>
+                <h3>R$ {produto.preco.toFixed(2)}</h3><br/>
                 <button onClick={()=>compraProduto(produto)} onChange={onChangeCarrinho}>Comprar</button>
                 
             </div>

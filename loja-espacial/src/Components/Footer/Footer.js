@@ -42,8 +42,8 @@ function Footer(){
 
                 <p>Desenvolvido com ❤️ por Daniel Emidio</p>
                 <div>
-                <img src={github} alt="icon-github"/>
-                <img src={linkedin} alt="icon-linkedin"/>
+                <a href="https://github.com/danielemidio1988" target="_blank"><img src={github} alt="icon-github"/></a>
+                <a href="https://www.linkedin.com/in/danielemidio1988/" target="_blank"><img src={linkedin} alt="icon-linkedin"/></a>
                 </div>
             </div>
         </MainFooter>
