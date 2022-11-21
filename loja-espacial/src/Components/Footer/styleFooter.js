@@ -22,6 +22,10 @@ export const MainFooter = styled.div`
             height: 30px;
             margin-left: 8px;
         }
+
+        img:hover{
+            cursor: pointer;
+        }
     }
 `
 

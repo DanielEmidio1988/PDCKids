@@ -4,7 +4,9 @@ export const MainHeader = styled.div`
     height: 16vh;
     width: 100%;
     // background-color: #C991FF;
-    background-image: linear-gradient(180deg, #5A2455 0%, #A94DF3 100%);
+    // background-color: #5A2455;
+    background-color: #A94DF3;
+    // background-image: linear-gradient(180deg, #5A2455 0%, #A94DF3 100%);
     display: flex;
     justify-content: space-between;
     border-radius: 0 0 20px 20px;
@@ -12,11 +14,18 @@ export const MainHeader = styled.div`
     color: white;
 
     div:first-child{
-        width: 20%;
-
+        width: 5%;        
     }
 
     div:nth-child(2){
+        display: flex;
+        align-items: center;
+        img{
+            height: 80px;
+        }
+    }
+
+    div:nth-child(3){
         display: flex;
         justify-content: center;
         align-items: center;
