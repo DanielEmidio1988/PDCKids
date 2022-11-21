@@ -63,7 +63,7 @@ function CarrinhoCompleto(props){
     calculaFrete()
 
     function validaCupom(){
-        const cupomPremiado = "@LABELOVERS"
+        const cupomPremiado = "@DEVLOVERS"
         if(cupom === cupomPremiado && totalCompra > 400){
             desconto = 200
             totalCompra = totalCompra - desconto

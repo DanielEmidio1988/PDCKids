@@ -38,5 +38,4 @@ function Carrinho (props){
     )
 }
 
-
 export default Carrinho

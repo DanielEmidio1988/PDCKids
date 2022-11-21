@@ -1,8 +1,5 @@
 import styled from "styled-components"
 
-// #A94DF3 cor roxa
-// background-color: #EAEAEA; - CINZA
-
 export const Card = styled.div`
     border: 1px solid #EAEAEA;
     border-radius: 8px;
@@ -11,7 +8,6 @@ export const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     
     div:first-child{
         display: flex;
@@ -24,7 +20,6 @@ export const Card = styled.div`
             height: 180px;
             width: auto;
             max-width: 100%;
-
         }
 
     }
@@ -142,7 +137,6 @@ export const BoxLateralCarrinho = styled.div`
     span{
         font-size: 12px;
     }
-
 `
 
 export const BoxCentral = styled.div`
