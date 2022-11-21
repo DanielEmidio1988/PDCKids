@@ -42,13 +42,11 @@ function Home (props){
     imagem: "https://m.media-amazon.com/images/I/618tlTVGNAL._AC_UL480_FMwebp_QL65_.jpg",
   }]
  
-  // const [carrinho, setCarrinho] = useState([])
   const [pesquisa, setPesquisa] = useState("")
   const [valorMinimo, setValorMinimo] = useState("")
   const [valorMaximo, setValorMaximo] = useState("")
   const [ordem, setOrdem] = useState("") 
   
-
     const onChangeCarrinho = (event)=>{
       props.setCarrinho(event.target.value)
     }
@@ -61,7 +59,6 @@ function Home (props){
     const compraProduto = (produto) =>{
       const novoCarrinho = [...props.carrinho]
       const produtoAdicionado = produto
-
       const produtoExistente = novoCarrinho.find((produto)=>{
           return produto.id === produtoAdicionado.id 
       })
@@ -69,25 +66,26 @@ function Home (props){
             produtoExistente.quantidade++
             produtoExistente.precototal = produtoExistente.quantidade * produtoExistente.preco
           }else{
-            novoCarrinho.push({...produtoAdicionado, quantidade: 1, precototal: produtoAdicionado.preco })
+            novoCarrinho.push({...produtoAdicionado, quantidade: 1, precototal: produtoAdicionado.preco})
           } 
         props.setCarrinho(novoCarrinho)
     }
 
-useEffect(() => {
-      if(props.carrinho.length>0){
-      const listaStringCarrinho = JSON.stringify(props.carrinho)
-      localStorage.setItem("carrinho",listaStringCarrinho)
-    }
-    },[props.carrinho])
+    //HOOK UTILIZADO PARA ARMAZENAR OS DADOS DO CARRINHO NO LOCALSTORAGE
+    useEffect(() => {
+          if(props.carrinho.length>0){
+          const listaStringCarrinho = JSON.stringify(props.carrinho)
+          localStorage.setItem("carrinho",listaStringCarrinho)
+        }
+        },[props.carrinho])
 
-  useEffect(() => {
-
-    const novoCarrinho = JSON.parse(localStorage.getItem("carrinho"))
-      if(novoCarrinho !== null){
-        props.setCarrinho(novoCarrinho)
-      }   
-},[])
+     //HOOK UTILIZADO PARA CARREGAR OS DADOS DO CARRINHO DO LOCALSTORAGE PARA A TELA
+    useEffect(() => {
+        const novoCarrinho = JSON.parse(localStorage.getItem("carrinho"))
+          if(novoCarrinho !== null){
+            props.setCarrinho(novoCarrinho)
+          }   
+    },[])
 
     const somaTela = ()=>{
           produtos
@@ -98,7 +96,7 @@ useEffect(() => {
             return (<p>{produto.length}</p>)
       })}
    
-   
+
     return(
         <>
         <Filtro
@@ -162,17 +160,13 @@ useEffect(() => {
             </div>
             <div>
                 <span>{produto.nome}</span><br/>
-
                 <h3>R$ {produto.preco.toFixed(2)}</h3><br/>
-                <button onClick={()=>compraProduto(produto)} onChange={onChangeCarrinho}>Comprar</button>
-                
+                <button onClick={()=>compraProduto(produto)} onChange={onChangeCarrinho}>Comprar</button>             
             </div>
             </Card>)
-
           })}
 
         </BoxCard>
-
         </BoxCentral>
         <Carrinho
         cesta={props.carrinho}

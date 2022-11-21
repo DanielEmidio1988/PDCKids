@@ -1,4 +1,3 @@
-
 import {createGlobalStyle} from "styled-components"
 import MainPage from './Components/MainPage';
 

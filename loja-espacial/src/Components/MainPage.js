@@ -7,14 +7,15 @@ import { useState } from "react";
 import {Container} from "./Main/styles"
 
 function MainPage(){
-
     const [tela, setTela] = useState(1)
     const [carrinho, setCarrinho] = useState([])
 
+    //FUNÇÃO QUE VAI "PUXAR" O VALOR QUE SERVIRÁ DE APOIO PARA A FUNÇÃO PARA RENDERIZAR TELA
     function mudarTela(valor){
         setTela(valor)
     }
 
+    //FUNÇÃO PARA RENDERIZAR A TELA DO USUÁRIO
     function renderizaTela (){
         switch(tela){
           case 1:
