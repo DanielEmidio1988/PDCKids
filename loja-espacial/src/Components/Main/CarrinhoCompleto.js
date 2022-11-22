@@ -72,6 +72,12 @@ function CarrinhoCompleto(props){
     }
     validaCupom()
 
+    function finalizaPedido(){
+        const zeraCarinho = props.carrinho.filter((item)=> item.quantidade < -1)
+        props.setCarrinho(zeraCarinho) 
+        props.mudarTela(3)
+    }
+
     return (
         <>
         <ContainerPedido>
@@ -118,7 +124,7 @@ function CarrinhoCompleto(props){
                     <div><span>Taxa de Entrega</span><span>R$ {frete}</span></div>
                     <div><span>Desconto</span><span>R$ {desconto}</span></div>
                     <div><span><h3>Total</h3></span><span><h3>R$ {totalCompra}</h3></span></div>
-                    <div><button onClick={()=>props.mudarTela(3)}>Continuar</button></div>
+                    <div><button onClick={()=>finalizaPedido()}>Continuar</button></div>
                 </div>
             </ResumoPedido>
 
