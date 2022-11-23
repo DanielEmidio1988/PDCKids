@@ -14,6 +14,7 @@ function Carrinho (props){
 
     const removeItem = (produto)=>{
         const buscaItem = props.cesta.filter((item) => item !== produto)
+        
         props.setCesta(buscaItem)
     }
 
@@ -28,8 +29,7 @@ function Carrinho (props){
                 <div key={index} onDoubleClick={()=>removeItem(produto)}>
                 <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> <b>{produto.precototal.toFixed(2)}</b></span></p>
                 </div>
-            )
-            
+            )    
         })}
         
         <p><b>Valor total: R$ {totalCarrinho.toFixed(2)}</b></p>

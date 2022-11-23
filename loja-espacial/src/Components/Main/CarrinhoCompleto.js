@@ -1,19 +1,16 @@
 import {ContainerPedido, BoxPedido, ResumoPedido, BoxPedidoEspaco, BoxPedidoProdutos, BoxPedidoProdutosItens} from "./styledCarrinhoCompleto"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
 function CarrinhoCompleto(props){
 
     let totalCarrinho = 0
     let qtdTotalCarrinho = 0
-    let totalCompra = 0
-    let frete = 0
-    let desconto = 0
+    const cupom_premiado = "@DEVLOVERS"
     const [cupom, setCupom] = useState("")
 
     function onChangeCupom(event){
         setCupom(event.target.value)
     }
-
 
     const somaCarrinho = ()=>{
         for (let i = 0;i<props.carrinho.length;i++){
@@ -50,31 +47,13 @@ function CarrinhoCompleto(props){
         props.setCarrinho(buscaItem)   
     }
 
-    const calculaFrete = ()=>{        
-        if(totalCarrinho > 200){
-            totalCompra = totalCarrinho
-        }else{
-            frete = 50
-            totalCompra = totalCarrinho + frete 
-        } 
-        return    
-    }
-
-    calculaFrete()
-
-    function validaCupom(){
-        const cupomPremiado = "@DEVLOVERS"
-        if(cupom === cupomPremiado && totalCompra > 400){
-            desconto = 200
-            totalCompra = totalCompra - desconto
-        }
-        return
-    }
-    validaCupom()
+    const frete = totalCarrinho < 200 ? 50 :  0
+    const desconto =  cupom === cupom_premiado && totalCarrinho > 400 ? 200:0
+    let totalCompra = (totalCarrinho + frete) - desconto  
 
     function finalizaPedido(){
-        const zeraCarinho = props.carrinho.filter((item)=> item.quantidade < -1)
-        props.setCarrinho(zeraCarinho) 
+        localStorage.clear()
+        props.setCarrinho([]) 
         props.mudarTela(3)
     }
 
@@ -91,8 +70,7 @@ function CarrinhoCompleto(props){
                         {props.carrinho.map((produto,index)=>{
                         return(
                         <BoxPedidoProdutos key={index}>
-                        {/* <p><span>X{produto.quantidade} </span><span>{produto.nome} </span><span> <b>{produto.precototal}</b></span><button onClick={()=>removeItem(produto)}>Remover</button></p> */}
-                        <BoxPedidoProdutosItens><span><img src={produto.imagem} alt="produto-carrinho"/></span><span>{produto.nome}</span><span></span><span><h4 onClick={()=>diminuiItem(produto)}>-</h4> {produto.quantidade} <h4 onClick={()=>aumentaItem(produto)}>+</h4></span><span><h4>R$ {produto.precototal}</h4></span></BoxPedidoProdutosItens>
+                        <BoxPedidoProdutosItens><span><img src={produto.imagem} alt="produto-carrinho"/></span><span>{produto.nome}</span><span></span><span><h4 onClick={()=>diminuiItem(produto)}>-</h4> {produto.quantidade} <h4 onClick={()=>aumentaItem(produto)}>+</h4></span><span><h4>R$ {produto.precototal.toFixed(2)}</h4></span></BoxPedidoProdutosItens>
                         </BoxPedidoProdutos>
                         )        
                         })}
@@ -120,10 +98,10 @@ function CarrinhoCompleto(props){
             <ResumoPedido>
                 <div>
                     <div><h2>Resumo Pedido</h2></div>
-                    <div><span>x{qtdTotalCarrinho} produto</span><span>R$ {totalCarrinho}</span></div>
+                    <div><span>x{qtdTotalCarrinho} produto</span><span>R$ {totalCarrinho.toFixed(2)}</span></div>
                     <div><span>Taxa de Entrega</span><span>R$ {frete}</span></div>
                     <div><span>Desconto</span><span>R$ {desconto}</span></div>
-                    <div><span><h3>Total</h3></span><span><h3>R$ {totalCompra}</h3></span></div>
+                    <div><span><h3>Total</h3></span><span><h3>R$ {totalCompra.toFixed(2)}</h3></span></div>
                     <div><button onClick={()=>finalizaPedido()}>Continuar</button></div>
                 </div>
             </ResumoPedido>
