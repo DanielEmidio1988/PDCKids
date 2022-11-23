@@ -46,6 +46,27 @@ function Home (props){
   const [valorMinimo, setValorMinimo] = useState("")
   const [valorMaximo, setValorMaximo] = useState("")
   const [ordem, setOrdem] = useState("") 
+
+  const produtosFiltradosTela = produtos
+  .filter((produto) => produto.nome.includes(pesquisa))
+  .filter((produto) => produto.preco >= valorMinimo)
+  .filter((produto) => {return valorMaximo ? produto.preco <= valorMaximo:produto})
+  .sort((a,b) =>{
+    switch(ordem){
+      case "Maior":
+        if (a.preco < b.preco){
+          return 1
+        }else{
+          return -1
+        }
+      case "Menor":
+        if(a.preco<b.preco){
+          return -1
+        }else{
+          return 1
+        }
+    }
+  })
   
     const onChangeCarrinho = (event)=>{
       props.setCarrinho(event.target.value)
@@ -86,15 +107,6 @@ function Home (props){
             props.setCarrinho(novoCarrinho)
           }   
     },[])
-
-    const somaTela = ()=>{
-          produtos
-          .filter((produto) => {return produto.nome.includes(pesquisa)})
-          .filter((produto)=> {return produto.preco >= valorMinimo})
-          .filter((produto)=> {return valorMaximo ? produto.preco <= valorMaximo : produto})
-          .map((produto, index)=>{  
-            return (<p>{produto.length}</p>)
-      })}
    
 
     return(
@@ -114,7 +126,7 @@ function Home (props){
               Resultado da busca:
             </h3>
             <p>
-              {somaTela()} produtos 
+              {produtosFiltradosTela.length} produtos 
             </p>
             </div>
             <div>
@@ -127,31 +139,7 @@ function Home (props){
           </div>
         <BoxCard>
 
-          {produtos
-          //Busca de produto pelo nome
-          .filter((produto) => {return produto.nome.includes(pesquisa)})
-          //filtrar produtos a partir do menor valor
-          .filter((produto)=> {return produto.preco >= valorMinimo})
-          //filtrar produtos a partir do menor valor
-          .filter((produto)=> {return valorMaximo ? produto.preco <= valorMaximo : produto})
-          //Ordenar do maior e do menor
-          .sort((a,b)=>{  
-            switch(ordem){
-              case "Maior":
-                if(a.preco < b.preco){
-                  return 1
-                }else{
-                  return -1
-                }
-              case "Menor":
-                if(a.preco < b.preco){
-                  return -1
-                }else{
-                  return 1
-                }
-              }
-          })
-          // Comando para renderizar todos os produtos da loja
+          {produtosFiltradosTela
           .map((produto, index)=>{
             return(
             <Card key={index}>

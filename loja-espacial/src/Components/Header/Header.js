@@ -6,12 +6,7 @@ import heart from "../../assets/heart.svg"
 import user from "../../assets/user.svg"
 
 
-function Header(props){
-
-    function alerta (){
-        
-        console.log("props",props)
-    }
+function Header(){
 
     return(
         <MainHeader>
@@ -29,7 +24,7 @@ function Header(props){
             </div>
             <div>
                 <img src={heart} alt="favoritos"/>
-                <img src={cart} alt="carrinho" onClick={()=>props.mudarTela(2)}/>
+                <img src={cart} alt="carrinho"/>
             </div>
 
         </MainHeader>
